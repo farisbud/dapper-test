@@ -1,0 +1,49 @@
+﻿
+@model IEnumerable<Club>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach(var item in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="card-image-top" src="~/images/club/@item.Image" width="100%" height="225" alt="Card image cap">
+
+                        <div class="card-body">
+                            <p class="card-text">@item.Title</p>
+                            <p class="card-text">@item.Description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-controller="Club" asp-action="detail" asp-route-id ="@item.Id" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a asp-controller="Club" asp-action="Edit" asp-route-id="@item.Id" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form method="post" asp-action="Delete" enctype="multipart/form-data" onclick="return confirm('Are you sure you want to delete this?')" asp-route-id="@item.Id">
+                                        <input type="hidden" value="@item.Id" id="@item.Id" />
+                                        <input type="hidden" value="@item.AddressId" id="@item.AddressId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                    </form>
+                                </div>
+                                <small class="text-muted">@item.Club_Category.Category </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }  
+        </div>
+
+
+    </div>
+</div>
+
